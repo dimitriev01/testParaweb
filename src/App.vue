@@ -2,7 +2,7 @@
     <div class="page">
          <div class="img__books">
              <div class="img__books-background"></div>
-              <img src="img/hero-layer-books 1.png" alt="нет картинки книги">
+             <img class="img__books-img" src="img/hero-layer-books 1.png" alt="нет картинки книги">
          </div>
          <div v-if="completed" class="completed__text">
              Успешно
@@ -69,12 +69,12 @@
                  <div class="reg__form-role-title">Выберите роль</div>
                  <div class="reg__form-role-select__box">
                     <select 
-                    :class="{invalid: v$.role.$invalid }"
-                    v-model="role" 
-                    class="reg__form-role-select__box-select">
-                     <option>Администратор</option>
-                     <option>Менеджер</option>
-                     <option>Гость</option>
+                      :class="{invalid: v$.role.$invalid }"
+                      v-model="role" 
+                      class="reg__form-role-select__box-select">
+                        <option class="reg__form-role-select__box-select-admin">Администратор</option>
+                        <option class="reg__form-role-select__box-select-manager">Менеджер</option>
+                        <option class="reg__form-role-select__box-select-guest">Гость</option>
                     </select>
                 </div>
                  <div 
@@ -97,7 +97,7 @@
              </div>
             <div class="reg__form-btn__box">
                 <button
-                    :disabled="v$.$invalid || !agreement"
+                    :disabled="v$.$invalid"
                     type="submit"
                     class="reg__form-btn__box-btn">
                     Зарегистрироваться
@@ -116,23 +116,26 @@ import { maska } from 'maska'
 
 export default {
     directives: { maska },
-    created(){
+    mounted(){
         /*let mock = new MockAdapter(axios);
         mock.onGet("/api/form").reply(200, {
-            obj:[{ "type": "email", "title": "email", "required": "true", "name": "email" },
+            obj:[
+                { "type": "email", "title": "email", "required": "true", "name": "email" },
                 { "type": "string", "title": "firstName","required": "true","name": "firstName" },
                 {"type": "string","title": "lastName", "required": "true","name": "lastName"  },
                 { "type": "tel", "title": "tel", "required": "true", "name": "tel" },
                 { "type": "string","title": "role", "required": "true",  "name": "role"  },
-                {"type": "bool", "title": "agreement", "required": "true","name": "agreement" }]
-            });
+                {"type": "bool", "title": "agreement", "required": "true","name": "agreement" }
+            ]
+        });
 
-            axios.get("/api/form").then(function (response) {
-                console.log(response.data);
-            });*/
+        axios.get("/api/form").then(function (response) {
+            console.log(response.data);
+        });*/
+
     },
     updated(){
-        if(!this.v$.$invalid && this.agreement && this.flag){
+        if(!this.v$.$invalid && this.flag){
             this.flag = false;
             axios.get("/api/form").catch(() => {
                 console.log('404 (Not Found) GET')
@@ -171,7 +174,7 @@ export default {
         email: { email, required  } ,
         tel: {  required, minLength: minLength(16)  },
         role: { required  },
-        agreement: { required },
+        agreement: {},
     },
     methods: {
         checkAgreement(){
@@ -188,7 +191,6 @@ export default {
             }).catch(() => {
                 console.log('404 (Not Found) POST')
             });
-            ;
             this.completed = true;
             return;
         },
