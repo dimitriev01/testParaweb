@@ -10,57 +10,48 @@
          <form v-else class="reg__form" @submit.prevent="sendForm()">
              <div class="reg__form-email">
                  <div class="reg__form-email-title">Электронная почта</div>
-                 <input
-                 :class="{invalid: v$.email.$invalid }"
-                 v-model.trim="email"
-                 class="reg__form-email-input"
-                 type="email"  
-                 placeholder="Text">
+                 <input-email
+                    :inv="v$.email"
+                    @create="createEmail"
+                 />
                  <div 
-                 v-if="v$.email.$invalid" 
+                 v-if="v$.email.$invalid && v$.email.$dirty" 
                  class="reg__form-email-error">
                     Error message
                  </div>
              </div>
              <div class="reg__form-firstname">
                  <div class="reg__form-firstname-title">Имя</div>
-                 <input
-                    :class="{invalid: v$.firstName.$invalid }"
-                    v-model.trim="firstName"
-                    class="reg__form-firstname-input" 
-                    type="text" 
-                    placeholder="Text">
+                 <input-first-name
+                    :inv="v$.firstName"
+                    @create="createFirstName"
+                />
                 <div 
-                 v-if="v$.firstName.$invalid" 
+                 v-if="v$.firstName.$invalid && v$.firstName.$dirty" 
                  class="reg__form-firstname-error">
                     Error message
                  </div>
              </div>
              <div class="reg__form-lastname">
                  <div class="reg__form-lastname-title">Фамилия</div>
-                 <input
-                 :class="{invalid: v$.lastName.$invalid }"
-                 v-model.trim="lastName"
-                 class="reg__form-lastname-input" 
-                 type="text" 
-                 placeholder="Text">
+                 <input-last-name
+                    :inv="v$.lastName"
+                    @create="createLastName"
+                />
                  <div 
-                 v-if="v$.lastName.$invalid" 
+                 v-if="v$.lastName.$invalid && v$.lastName.$dirty" 
                  class="reg__form-lastname-error">
                     Error message
                  </div>
              </div>
              <div class="reg__form-tel">
                  <div class="reg__form-tel-title">Телефон</div>
-                 <input
-                 :class="{invalid: v$.tel.$invalid }"
-                 v-maska="'+7 ### ### ## ##'"
-                 v-model="tel"
-                 class="reg__form-tel-input"
-                 type="tel" 
-                 placeholder="Text">
+                 <input-tel
+                 @create="createTel"
+                 :inv="v$.tel"
+                 />
                  <div 
-                 v-if="v$.tel.$invalid" 
+                 v-if="v$.tel.$invalid && v$.tel.$dirty" 
                  class="reg__form-tel-error">
                     Error message
                  </div>
@@ -68,17 +59,13 @@
              <div class="reg__form-role">
                  <div class="reg__form-role-title">Выберите роль</div>
                  <div class="reg__form-role-select__box">
-                    <select 
-                      :class="{invalid: v$.role.$invalid }"
-                      v-model="role" 
-                      class="reg__form-role-select__box-select">
-                        <option class="reg__form-role-select__box-select-admin">Администратор</option>
-                        <option class="reg__form-role-select__box-select-manager">Менеджер</option>
-                        <option class="reg__form-role-select__box-select-guest">Гость</option>
-                    </select>
+                    <select-role
+                      :inv="v$.role"
+                      @create="createRole"
+                    />
                 </div>
                  <div 
-                 v-if="v$.role.$invalid" 
+                 v-if="v$.role.$invalid && v$.role.$dirty" 
                  class="reg__form-role-error">
                     Error message
                  </div>
@@ -97,7 +84,7 @@
              </div>
             <div class="reg__form-btn__box">
                 <button
-                    :disabled="v$.$invalid"
+                    :disabled="!role || !firstName || !lastName || !email || !tel"
                     type="submit"
                     class="reg__form-btn__box-btn">
                     Зарегистрироваться
@@ -112,31 +99,37 @@ import axios from 'axios'
 import useVuelidate from '@vuelidate/core'
 import { required, email, minLength } from '@vuelidate/validators'
 import MockAdapter from 'axios-mock-adapter'
-import { maska } from 'maska'
+import InputEmail from './components/InputEmail'
+import InputFirstName from "./components/InputFirstName"
+import InputLastName from "./components/InputLastName"
+import InputTel from "./components/InputTel"
+import SelectRole from "./components/SelectRole"
 
 export default {
-    directives: { maska },
+    components:{
+        InputEmail, 
+        InputFirstName, 
+        InputLastName,
+        InputTel,
+        SelectRole
+    },
     mounted(){
-        /*let mock = new MockAdapter(axios);
-        mock.onGet("/api/form").reply(200, {
+        let mock = new MockAdapter(axios);
+        mock.onPost("/api/form").reply(200, {
             obj:[
                 { "type": "email", "title": "email", "required": "true", "name": "email" },
                 { "type": "string", "title": "firstName","required": "true","name": "firstName" },
                 {"type": "string","title": "lastName", "required": "true","name": "lastName"  },
                 { "type": "tel", "title": "tel", "required": "true", "name": "tel" },
                 { "type": "string","title": "role", "required": "true",  "name": "role"  },
-                {"type": "bool", "title": "agreement", "required": "true","name": "agreement" }
+                {"type": "bool", "title": "agreement", "required": "false","name": "agreement" }
             ]
         });
-
-        axios.get("/api/form").then(function (response) {
-            console.log(response.data);
-        });*/
-
     },
     updated(){
         if(!this.v$.$invalid && this.flag){
             this.flag = false;
+            
             axios.get("/api/form").catch(() => {
                 console.log('404 (Not Found) GET')
             }), {
@@ -147,11 +140,9 @@ export default {
                 role: this.role,
                 agreement: this.agreement,
             };
-
-            this.v$.$touch();
         }
     },
-    setup () { 
+   setup () { 
         return { 
             v$: useVuelidate() ,
         } 
@@ -168,30 +159,51 @@ export default {
             completed: false,
         }
     },
-    validations : {
-        firstName: { required  }, 
-        lastName: { required  }, 
-        email: { email, required  } ,
-        tel: {  required, minLength: minLength(16)  },
-        role: { required  },
-        agreement: {},
+    validations() {
+        return{
+            firstName: { required  }, 
+            lastName: { required  }, 
+            tel: {  required, minLength: minLength(16) },
+            role: { required  },
+            agreement: {},
+            email: {required, email}
+        }
     },
     methods: {
+        createEmail(email){
+            this.email = email;
+        },
+        createFirstName(firstName){
+            this.firstName = firstName;
+        },
+        createLastName(lastName){
+            this.lastName = lastName;
+        },
+        createTel(tel){
+            this.tel = tel;
+        },
+        createRole(role){
+            this.role = role;
+        },
         checkAgreement(){
             this.agreement = true;
         },
         sendForm() {
-            axios.post("/api/form", {
-                email: this.email,
-                firstName: this.firstName,
-                lastName : this.lastName,
-                tel: this.tel,
-                role: this.role,
-                agreement: this.agreement,
-            }).catch(() => {
-                console.log('404 (Not Found) POST')
-            });
-            this.completed = true;
+            if (this.v$.$invalid){
+                this.v$.$touch();
+            } else {
+                this.completed = true;
+                axios.post("/api/form", {
+                    email: this.email,
+                    firstName: this.firstName,
+                    lastName : this.lastName,
+                    tel: this.tel,
+                    role: this.role,
+                    agreement: this.agreement,
+                }).catch(() => {
+                    console.log('404 (Not Found) POST')
+                });   
+            }
             return;
         },
     },
@@ -212,7 +224,6 @@ export default {
         justify-content: space-between;
         display: flex;
         align-items: center;
-        max-width: 1440px;
         height: 900px;
         color: rgba(242, 244, 245, 1);
         width: 100%;
@@ -239,19 +250,11 @@ export default {
         display: flex;
         flex-direction: column;
     }
-    .reg__form input, 
-    .reg__form-role-select__box-select{
+    .reg__form input{
         max-width: 316px;
         width: 100%;
     }
-    .reg__form-role-select__box-select > option{
-        background: #fff;
-    }
     
-    .reg__form-role-select__box-select{
-        appearance: none;
-    }
-
     .reg__form-role-select__box{
         position: relative;
     }
@@ -289,14 +292,6 @@ export default {
         color: rgba(133, 134, 140, 1);
         margin-bottom: 8px;
     }
-    .page .reg__form-email-input.invalid,
-    .page .reg__form-firstname-input.invalid,
-    .page .reg__form-lastname-input.invalid,
-    .page .reg__form-tel-input.invalid,
-    .page .reg__form-role-select__box-select.invalid{
-        background: rgba(243, 39, 53, 0.08);
-        border-color: #EF3E4A;
-    }
 
     .reg__form-email, 
     .reg__form-firstname, 
@@ -306,30 +301,6 @@ export default {
         margin-bottom: 15px;
     }
 
-    .reg__form-email-input, 
-    .reg__form-firstname-input, 
-    .reg__form-lastname-input, 
-    .reg__form-tel-input, 
-    .reg__form-role-select__box-select{
-        transition: .2s all;
-        padding: 18px 12px;
-        height: 56px;
-        font-size: 16px;
-        color: #212121;
-        font-weight: normal;
-        border-radius: 4px;
-        outline: 0;
-        background: #fff;
-        border: 1px solid #CAD0E0;
-        line-height: 18px;
-    }
-    .reg__form-email-input:focus, 
-    .reg__form-firstname-input:focus, 
-    .reg__form-lastname-input:focus, 
-    .reg__form-tel-input:focus, 
-    .reg__form-role-select__box-select:focus{
-        border-color: #344887;
-    }
     .reg__form-agreement{
         align-items: center;
         margin-top: 8px;
@@ -387,13 +358,7 @@ export default {
     .reg__form-agreement-text{
         color: #5D5D65;
     }
-    .reg__form-email-input:active, 
-    .reg__form-firstname-input:active, 
-    .reg__form-lastname-input:active, 
-    .reg__form-tel-input:active{
-        background: #fff;
-        border: 1px solid #344887;
-    }
+
     .reg__form-btn__box{
         margin-top: 60px;
         justify-content: center;
@@ -433,5 +398,13 @@ export default {
         font-size: 16px;
         line-height: 18px;
         color: #212121;
+    }
+    @media (min-width: 1440px){
+        .page{
+            justify-content: center;
+        }
+        .img__books{
+            margin-right: 200px;
+        }
     }
 </style>
