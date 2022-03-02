@@ -54,4 +54,10 @@
         background: rgba(243, 39, 53, 0.08);
         border-color: #EF3E4A;
     }
+
+    @media (max-width: 640px){
+        .reg__form-lastname-input{
+            max-width: auto;
+        }
+    }
 </style>

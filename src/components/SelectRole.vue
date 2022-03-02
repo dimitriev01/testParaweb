@@ -35,7 +35,8 @@
         background: rgba(243, 39, 53, 0.08);
         border-color: #EF3E4A;
     }
-        .reg__form-role-select__box-select{
+    
+    .reg__form-role-select__box-select{
         transition: .2s all;
         padding: 18px 12px;
         height: 56px;
@@ -63,4 +64,9 @@
         appearance: none;
     }
 
+    @media (max-width: 640px){
+        .reg__form-role-select__box-select{
+            max-width: auto;
+        }
+    }
 </style>

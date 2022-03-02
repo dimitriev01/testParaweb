@@ -262,7 +262,7 @@ export default {
     .reg__form-role-select__box:after {
         content: "▼";
         position: absolute;
-        right: 34px;
+        right: 15%;
         top: 24px;
         font-size: 12px;
         z-index: 1;
@@ -409,6 +409,44 @@ export default {
         }
         .img__books-background{
             top: -235px;
+        }
+    }
+    @media (max-width: 1300px){
+        .page{
+            padding: 20px;
+            height: auto;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .img__books-background{
+            display: none;
+        }
+        .img__books-img{
+            width: 100%;
+            height: auto;
+            min-width: 45px;
+        }
+    }
+
+    @media (max-width: 480px){
+        .page{
+            padding: 15px;
+        }
+    }
+    @media (max-width: 420px){
+        .reg__form-role-select__box:after{
+            right: 10%;
+        }
+        .reg__form{
+            padding: 25px;
+        }
+    }
+    @media (max-width: 320px){
+        .page{
+            padding: 15px;
+        }
+        .reg__form{
+            padding: 15px;
         }
     }
 </style>
