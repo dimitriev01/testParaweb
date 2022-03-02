@@ -405,6 +405,10 @@ export default {
         }
         .img__books{
             margin-right: 200px;
+            position: relative;
+        }
+        .img__books-background{
+            top: -235px;
         }
     }
 </style>
