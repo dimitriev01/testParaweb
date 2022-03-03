@@ -29,30 +29,33 @@
     }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+    $firstname-input-color : #212121;
+    $firstname-input-border-color : #CAD0E0;
+    $firstname-input-color-focus:#344887;
+    $firstname-input-border-color-invalid: #EF3E4A;
+    $firstname-input-background-invalid: rgba(243, 39, 53, 0.08);
     .reg__form-firstname-input{
+        max-width: 316px;
+        width: 100%;
         transition: .2s all;
         padding: 18px 12px;
         height: 56px;
         font-size: 16px;
-        color: #212121;
+        color: $firstname-input-color;
         font-weight: normal;
         border-radius: 4px;
         outline: 0;
         background: #fff;
-        border: 1px solid #CAD0E0;
+        border: 1px solid $firstname-input-border-color;
         line-height: 18px;
     } 
     .reg__form-firstname-input:focus{
-        border-color: #344887;
-    }
-    .reg__form-firstname-input:active{
-         background: #fff;
-        border: 1px solid #344887;
+        border-color: $firstname-input-color-focus;
     }
     .page .reg__form-firstname-input.invalid{
-        background: rgba(243, 39, 53, 0.08);
-        border-color: #EF3E4A;
+        background: $firstname-input-background-invalid;
+        border-color: $firstname-input-border-color-invalid;
     }
 
     @media (max-width: 640px){

@@ -77,7 +77,7 @@
                  class="reg__form-agreement-checkbox" 
                  id="reg__form-agreement-checkbox" 
                  type="checkbox">
-                 <label for="reg__form-agreement-checkbox">
+                 <label class="reg__form-agreement-label" for="reg__form-agreement-checkbox">
                       <div class="reg__form-agreement-background"></div>
                  </label>
                  <div class="reg__form-agreement-text">Даю согласие на обработку персональных данных</div>
@@ -210,243 +210,287 @@ export default {
 }
 </script>
 
-<style>
-    *{
+<style lang="scss">
+
+    $font: 'Geometria'; 
+    $mes-error-color : #EF3E4A;
+    $color-select-triangle:#6B7182;
+    $reg-form-border-color: #E6E9F0;
+    $reg-form-agreement-text-color:#5D5D65;
+    $reg__form-agreement-background:  rgba(84, 119, 242, 0.1);
+
+    *{  
         padding: 0;
         margin: 0;
         box-sizing: border-box;
     }
     body{
-        font-family: 'Geometria';
-    }
-    .page{
-        padding: 69px 160px 69px 45px;
-        justify-content: space-between;
-        display: flex;
-        align-items: center;
-        height: 900px;
-        color: rgba(242, 244, 245, 1);
-        width: 100%;
-        background: #F2F4F5;
-    }
-    .img__books{
-      z-index: 0;
-    }
-    .img__books-background{
-        position: absolute;
-        z-index: -1;
-        top: 0;
-        left: 0;
-        width: 716px;
-        height: 900px;
-        background: #fff;
-    }
-    .reg__form{
-        padding: 32px;
-        background: #FFFFFF;
-        border: 1px solid #E6E9F0;
-        border-radius: 8px;
-        max-width: 404px;
-        display: flex;
-        flex-direction: column;
-    }
-    .reg__form input{
-        max-width: 316px;
-        width: 100%;
-    }
-    
-    .reg__form-role-select__box{
-        position: relative;
-    }
-
-    .reg__form-role-select__box:after {
-        content: "▼";
-        position: absolute;
-        right: 15%;
-        top: 24px;
-        font-size: 12px;
-        z-index: 1;
-        color: #6B7182;
-        width: 10px;
-        pointer-events: none;
-        height: 37px;
-    }
-
-    .reg__form-email-error, 
-    .reg__form-firstname-error, 
-    .reg__form-lastname-error, 
-    .reg__form-tel-error, 
-    .reg__form-role-error{
-        font-size: 12px;  
-        margin-top: 10px;
-        line-height: 12px;
-        letter-spacing: 0.004em;
-        color: #EF3E4A;
-    }
-
-    .reg__form-email-title, 
-    .reg__form-firstname-title, 
-    .reg__form-lastname-title, 
-    .reg__form-tel-title, 
-    .reg__form-role-title{
-        color: rgba(133, 134, 140, 1);
-        margin-bottom: 8px;
-    }
-
-    .reg__form-email, 
-    .reg__form-firstname, 
-    .reg__form-lastname, 
-    .reg__form-tel, 
-    .reg__form-role{
-        margin-bottom: 15px;
-    }
-
-    .reg__form-agreement{
-        align-items: center;
-        margin-top: 8px;
-        display: flex;
-    }
-    .reg__form-agreement-checkbox[type="checkbox"]{
-        display: none;
-    }
-    
-    .reg__form-agreement > label::after {
-        content: "";
-        color: #fff;
-        display: inline-block;
-        font: 11px FontAwesome;
-        margin-right: 10px;
-        text-align: center;
-        text-indent: 0px;
-        padding: 3px;
-        width: 11px;
-        transition: all .2s;
-        height: 11px;
-        border-radius: 3px;
-        background:  #fff;
-        border: 3px solid #6B7182;
-        vertical-align: middle;
-    }
-    
-    .page .reg__form-agreement-checkbox:checked + label::after,
-    .page .reg__form-agreement-checkbox:hover + label::after {
-        content: "\f00c";
-        background: #344887;
-    }
-
-    .page .reg__form-agreement-checkbox:disabled + label::after {
-        background: #999999;
-    }
-
-    .reg__form-agreement-checkbox + label {
-        position: relative;
-        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-        cursor: pointer;
-    }
-
-    .page .reg__form-agreement-checkbox:hover + label .reg__form-agreement-background{
-        position: absolute;
-        border-radius: 80px;
-        transition: all .2s;
-        left: -8px;
-        top: -8px;
-        width: 45px;
-        height: 45px;
-        background: rgba(84, 119, 242, 0.1);
-    }
-    
-    .reg__form-agreement-text{
-        color: #5D5D65;
-    }
-
-    .reg__form-btn__box{
-        margin-top: 60px;
-        justify-content: center;
-        display: flex;
-    }
-    .reg__form-btn__box-btn{
-        transition: .4s all;
-        padding: 8px 16px;
-        color: #fff;
-        text-transform: uppercase;
-        background: #344887;
-        border-radius: 4px;
-        font-size: 14px;
-        line-height: 20px;
-        font-weight: 500;
-        letter-spacing: 0.0125em;
-        border: 0;
-    }
-    .reg__form-btn__box-btn:hover{
-        cursor: pointer;
-        background: linear-gradient(0deg, rgba(196, 209, 255, 0.1), rgba(196, 209, 255, 0.1)), #344887;
-    }
-    .reg__form-btn__box-btn:active{
-        background: linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), #344887;
-    }
-    .reg__form-btn__box-btn:disabled{
-        color:#999;
-        cursor: default;
-        background: rgba(119, 119, 119, 0.1);
-    }
-    .completed__text{
-        border: 1px solid #E6E9F0;
-        border-radius: 8px;
-        max-width: 404px;
-        width: 100%;
-        padding: 29px 167px;
-        font-size: 16px;
-        line-height: 18px;
-        color: #212121;
-    }
-    @media (min-width: 1440px){
-        .page{
-            justify-content: center;
-        }
+        font-family: $font;
         .img__books{
-            margin-right: 200px;
-            position: relative;
+                z-index: 0;
+                .img__books-background{
+                position: absolute;
+                z-index: -1;
+                top: 0;
+                left: 0;
+                width: 716px;
+                height: 900px;
+                background: #fff;
+            }
         }
-        .img__books-background{
-            top: -235px;
+        .reg__form{
+            padding: 32px;
+            background: #FFFFFF;
+            border: 1px solid $reg-form-border-color;
+            border-radius: 8px;
+            max-width: 404px;
+            display: flex;
+            flex-direction: column;
+            
+            .reg__form-email{
+                margin-bottom: 15px;
+                .reg__form-email-error{
+                    font-size: 12px;  
+                    margin-top: 10px;
+                    line-height: 12px;
+                    letter-spacing: 0.004em;
+                    color: $mes-error-color;
+                }
+                .reg__form-email-title{
+                    color: rgba(133, 134, 140, 1);
+                    margin-bottom: 8px;
+                }
+            }
+
+            .reg__form-firstname{
+                margin-bottom: 15px;
+                .reg__form-firstname-error{
+                    font-size: 12px;  
+                    margin-top: 10px;
+                    line-height: 12px;
+                    letter-spacing: 0.004em;
+                    color: $mes-error-color;
+                }
+                .reg__form-firstname-title{
+                    color: rgba(133, 134, 140, 1);
+                    margin-bottom: 8px;
+                }
+            }
+
+            .reg__form-lastname{
+                margin-bottom: 15px;
+                .reg__form-lastname-error{
+                    font-size: 12px;  
+                    margin-top: 10px;
+                    line-height: 12px;
+                    letter-spacing: 0.004em;
+                    color: $mes-error-color;
+                }
+                .reg__form-lastname-title{
+                    color: rgba(133, 134, 140, 1);
+                    margin-bottom: 8px;
+                }
+            }
+
+            .reg__form-tel{
+                margin-bottom: 15px;
+                .reg__form-tel-error{
+                    font-size: 12px;  
+                    margin-top: 10px;
+                    line-height: 12px;
+                    letter-spacing: 0.004em;
+                    color: $mes-error-color;
+                }
+                .reg__form-tel-title{
+                    color: rgba(133, 134, 140, 1);
+                    margin-bottom: 8px;
+                }
+            }
+
+            .reg__form-role{
+                margin-bottom: 15px;
+                .reg__form-role-error{
+                    font-size: 12px;  
+                    margin-top: 10px;
+                    line-height: 12px;
+                    letter-spacing: 0.004em;
+                    color: $mes-error-color;
+                }
+                .reg__form-role-title{
+                    color: rgba(133, 134, 140, 1);
+                    margin-bottom: 8px;
+                }
+                .reg__form-role-select__box{
+                    position: relative;
+                }
+                .reg__form-role-select__box:after {
+                    content: "▼";
+                    position: absolute;
+                    right: 13%;
+                    top: 24px;
+                    font-size: 12px;
+                    z-index: 1;
+                    color: $color-select-triangle;
+                    width: 10px;
+                    pointer-events: none;
+                    height: 37px;
+                }
+            }
+
+            .reg__form-agreement{
+                align-items: center;
+                margin-top: 8px;
+                display: flex;
+                .reg__form-agreement-checkbox[type="checkbox"]{
+                    display: none;
+                }
+                .reg__form-agreement-checkbox + .reg__form-agreement-label {
+                    position: relative;
+                    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+                    cursor: pointer;
+                }
+                .reg__form-agreement-label::after {
+                    content: "";
+                    color: #fff;
+                    display: inline-block;
+                    font: 11px FontAwesome;
+                    margin-right: 10px;
+                    text-align: center;
+                    text-indent: 0px;
+                    padding: 3px;
+                    width: 11px;
+                    transition: all .2s;
+                    height: 11px;
+                    border-radius: 3px;
+                    background:  #fff;
+                    border: 3px solid #6B7182;
+                    vertical-align: middle;
+                }
+                .reg__form-agreement-checkbox:checked + .reg__form-agreement-label::after {
+                    content: "\f00c";
+                    background: #344887;
+                }
+                .reg__form-agreement-checkbox:disabled + .reg__form-agreement-label::after {
+                    background: #999999;
+                }
+                .reg__form-agreement-text{
+                    color: $reg-form-agreement-text-color;
+                }
+                .reg__form-agreement-checkbox:hover + .reg__form-agreement-label .reg__form-agreement-background{
+                    position: absolute;
+                    border-radius: 80px;
+                    transition: all .2s;
+                    left: -8px;
+                    top: -8px;
+                    width: 45px;
+                    height: 45px;
+                    background: $reg__form-agreement-background;
+                }
+            }
+
+            .reg__form-btn__box{
+                margin-top: 60px;
+                justify-content: center;
+                display: flex;
+                .reg__form-btn__box-btn{
+                    outline: none;
+                    transition: .4s all;
+                    padding: 8px 16px;
+                    color: #fff;
+                    text-transform: uppercase;
+                    background: #344887;
+                    border-radius: 4px;
+                    font-size: 14px;
+                    line-height: 20px;
+                    font-weight: 500;
+                    letter-spacing: 0.0125em;
+                    border: 0;
+                    .reg__form-btn__box-btn:hover{
+                        cursor: pointer;
+                        background: linear-gradient(0deg, rgba(196, 209, 255, 0.1), rgba(196, 209, 255, 0.1)), #344887;
+                    }
+                }
+                .reg__form-btn__box-btn:active{
+                    background: linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), #344887;
+                }
+                .reg__form-btn__box-btn:disabled{
+                    color:#999;
+                    cursor: default;
+                    background: rgba(119, 119, 119, 0.1);
+                }
+            }
+            
+           
+            
         }
-    }
-    @media (max-width: 1300px){
-        .page{
-            padding: 20px;
-            height: auto;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .img__books-background{
-            display: none;
-        }
-        .img__books-img{
+        
+        .completed__text{
+            border: 1px solid #E6E9F0;
+            border-radius: 8px;
+            max-width: 404px;
             width: 100%;
-            height: auto;
-            min-width: 45px;
+            padding: 29px 167px;
+            font-size: 16px;
+            line-height: 18px;
+            color: #212121;
+        }
+
+        .page{
+            padding: 69px 160px 69px 45px;
+            justify-content: space-between;
+            display: flex;
+            align-items: center;
+            height: 900px;
+            color: rgba(242, 244, 245, 1);
+            width: 100%;
+            background: #F2F4F5;
+
+            @media (min-width: 1440px){
+                justify-content: center;
+                .img__books{
+                    margin-right: 200px;
+                    position: relative;
+                }
+                .img__books-background{
+                    top: -235px;
+                }
+            }
+
+            @media (max-width: 1300px){
+                padding: 20px;
+                height: auto;
+                flex-wrap: wrap;
+                justify-content: center;
+                .img__books-background{
+                    display: none;
+                }
+                .img__books-img{
+                    width: 100%;
+                    height: auto;
+                    min-width: 45px;
+                }
+            }
+
+            @media (max-width: 480px){
+                padding: 15px;
+            }
+
+            @media (max-width: 420px){
+                .reg__form{
+                    padding: 25px;
+                    .reg__form-role-select__box:after {
+                        right: 8%;
+                    }
+                }
+            }
+            
+            @media (max-width: 320px){
+                padding: 15px;
+                .reg__form{
+                    padding: 15px;
+                }
+            }
         }
     }
 
-    @media (max-width: 480px){
-        .page{
-            padding: 15px;
-        }
-    }
-    @media (max-width: 420px){
-        .reg__form-role-select__box:after{
-            right: 10%;
-        }
-        .reg__form{
-            padding: 25px;
-        }
-    }
-    @media (max-width: 320px){
-        .page{
-            padding: 15px;
-        }
-        .reg__form{
-            padding: 15px;
-        }
-    }
 </style>
