@@ -3,7 +3,7 @@
         <input
             :class="{invalid: inv.$invalid && inv.$dirty }"
             v-model.trim="email"
-            class="reg__form-email-input"
+            class="reg__form-email__input"
             type="text"
             placeholder="Text"
         >
@@ -35,7 +35,7 @@
     $email-input-color-focus:#344887;
     $email-input-border-color-invalid: #EF3E4A;
     $email-input-background-invalid: rgba(243, 39, 53, 0.08);
-    .reg__form-email-input{
+    .reg__form-email__input{
         max-width: 316px;
         width: 100%;
         transition: .2s all;
@@ -50,16 +50,16 @@
         border: 1px solid $email-input-border-color;
         line-height: 18px;
     } 
-    .reg__form-email-input:focus{
+    .reg__form-email__input:focus{
         border-color: $email-input-color-focus;
     }
-    .page .reg__form-email-input.invalid{
+    .page .reg__form-email__input.invalid{
         background: $email-input-background-invalid;
         border-color: $email-input-border-color-invalid;
     }
 
     @media (max-width: 640px){
-        .reg__form-email-input{
+        .reg__form-email__input{
             max-width: auto;
         }
     }

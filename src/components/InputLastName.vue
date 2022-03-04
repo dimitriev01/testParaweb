@@ -3,7 +3,7 @@
         <input
             :class="{invalid: inv.$invalid && inv.$dirty }"
             v-model.trim="lastName"
-            class="reg__form-lastname-input"
+            class="reg__form-lastname__input"
             type="text"  
             placeholder="Text"
         >
@@ -35,7 +35,7 @@
     $lastname-input-color-focus:#344887;
     $lastname-input-border-color-invalid: #EF3E4A;
     $lastname-input-background-invalid: rgba(243, 39, 53, 0.08);
-    .reg__form-lastname-input{
+    .reg__form-lastname__input{
         max-width: 316px;
         width: 100%;
         transition: .2s all;
@@ -50,16 +50,16 @@
         border: 1px solid $lastname-input-border-color;
         line-height: 18px;
     } 
-    .reg__form-lastname-input:focus{
+    .reg__form-lastname__input:focus{
         border-color: $lastname-input-color-focus;
     }
-    .page .reg__form-lastname-input.invalid{
+    .page .reg__form-lastname__input.invalid{
         background: $lastname-input-background-invalid;
         border-color: $lastname-input-border-color-invalid;
     }
 
     @media (max-width: 640px){
-        .reg__form-lastname-input{
+        .reg__form-lastname__input{
             max-width: auto;
         }
     }

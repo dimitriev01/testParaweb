@@ -1,63 +1,63 @@
 <template>
     <div class="page">
          <div class="img__books">
-             <div class="img__books-background"></div>
-             <img class="img__books-img" src="img/hero-layer-books 1.png" alt="нет картинки книги">
+             <div class="img__books__background"></div>
+             <img class="img__books__img" src="img/hero-layer-books 1.png" alt="нет картинки книги">
          </div>
          <div v-if="completed" class="completed__text">
              Успешно
          </div>
          <form v-else class="reg__form" @submit.prevent="sendForm()">
              <div class="reg__form-email">
-                 <div class="reg__form-email-title">Электронная почта</div>
+                 <div class="reg__form-email__title">Электронная почта</div>
                  <input-email
                     :inv="v$.email"
                     @create="createEmail"
                  />
                  <div 
                  v-if="v$.email.$invalid && v$.email.$dirty" 
-                 class="reg__form-email-error">
+                 class="reg__form-email__error">
                     Error message
                  </div>
              </div>
              <div class="reg__form-firstname">
-                 <div class="reg__form-firstname-title">Имя</div>
+                 <div class="reg__form-firstname__title">Имя</div>
                  <input-first-name
                     :inv="v$.firstName"
                     @create="createFirstName"
                 />
                 <div 
                  v-if="v$.firstName.$invalid && v$.firstName.$dirty" 
-                 class="reg__form-firstname-error">
+                 class="reg__form-firstname__error">
                     Error message
                  </div>
              </div>
              <div class="reg__form-lastname">
-                 <div class="reg__form-lastname-title">Фамилия</div>
+                 <div class="reg__form-lastname__title">Фамилия</div>
                  <input-last-name
                     :inv="v$.lastName"
                     @create="createLastName"
                 />
                  <div 
                  v-if="v$.lastName.$invalid && v$.lastName.$dirty" 
-                 class="reg__form-lastname-error">
+                 class="reg__form-lastname__error">
                     Error message
                  </div>
              </div>
              <div class="reg__form-tel">
-                 <div class="reg__form-tel-title">Телефон</div>
+                 <div class="reg__form-tel__title">Телефон</div>
                  <input-tel
                  @create="createTel"
                  :inv="v$.tel"
                  />
                  <div 
                  v-if="v$.tel.$invalid && v$.tel.$dirty" 
-                 class="reg__form-tel-error">
+                 class="reg__form-tel__error">
                     Error message
                  </div>
              </div>
              <div class="reg__form-role">
-                 <div class="reg__form-role-title">Выберите роль</div>
+                 <div class="reg__form-role__title">Выберите роль</div>
                  <div class="reg__form-role-select__box">
                     <select-role
                       :inv="v$.role"
@@ -66,7 +66,7 @@
                 </div>
                  <div 
                  v-if="v$.role.$invalid && v$.role.$dirty" 
-                 class="reg__form-role-error">
+                 class="reg__form-role__error">
                     Error message
                  </div>
              </div>
@@ -74,11 +74,11 @@
                  <input 
                  @input="checkAgreement" 
                  v-model="agreement" 
-                 class="reg__form-agreement-checkbox" 
-                 id="reg__form-agreement-checkbox" 
+                 class="reg__form-agreement__checkbox" 
+                 id="reg__form-agreement__checkbox" 
                  type="checkbox">
-                 <label class="reg__form-agreement-label" for="reg__form-agreement-checkbox">
-                      <div class="reg__form-agreement-background"></div>
+                 <label class="reg__form-agreement-label" for="reg__form-agreement__checkbox">
+                      <div class="reg__form-agreement-label__background"></div>
                  </label>
                  <div class="reg__form-agreement-text">Даю согласие на обработку персональных данных</div>
              </div>
@@ -125,14 +125,13 @@ export default {
                 {"type": "bool", "title": "agreement", "required": "false","name": "agreement" }
             ]
         });
+        console.log('Выполнился метод POST из axios-mock-adapter');    
     },
     updated(){
         if(!this.v$.$invalid && this.flag){
             this.flag = false;
             
-            axios.get("/api/form").catch(() => {
-                console.log('404 (Not Found) GET')
-            }), {
+            axios.get("/api/form"), {
                 email: this.email,
                 firstName: this.firstName,
                 lastName : this.lastName,
@@ -140,6 +139,8 @@ export default {
                 role: this.role,
                 agreement: this.agreement,
             };
+
+            console.log('Выполнилась инициализация формы GET');
         }
     },
    setup () { 
@@ -200,9 +201,8 @@ export default {
                     tel: this.tel,
                     role: this.role,
                     agreement: this.agreement,
-                }).catch(() => {
-                    console.log('404 (Not Found) POST')
-                });   
+                });
+                console.log('Выполнилась отправка формы POST');
             }
             return;
         },
@@ -227,16 +227,16 @@ export default {
     body{
         font-family: $font;
         .img__books{
-                z-index: 0;
-                .img__books-background{
-                position: absolute;
-                z-index: -1;
-                top: 0;
-                left: 0;
-                width: 716px;
-                height: 900px;
-                background: #fff;
-            }
+            z-index: 0;
+                .img__books__background{
+                    position: absolute;
+                    z-index: -1;
+                    top: 0;
+                    left: 0;
+                    width: 716px;
+                    height: 900px;
+                    background: #fff;
+                }
         }
         .reg__form{
             padding: 32px;
@@ -249,14 +249,14 @@ export default {
             
             .reg__form-email{
                 margin-bottom: 15px;
-                .reg__form-email-error{
+                .reg__form-email__error{
                     font-size: 12px;  
                     margin-top: 10px;
                     line-height: 12px;
                     letter-spacing: 0.004em;
                     color: $mes-error-color;
                 }
-                .reg__form-email-title{
+                .reg__form-email__title{
                     color: rgba(133, 134, 140, 1);
                     margin-bottom: 8px;
                 }
@@ -264,14 +264,14 @@ export default {
 
             .reg__form-firstname{
                 margin-bottom: 15px;
-                .reg__form-firstname-error{
+                .reg__form-firstname__error{
                     font-size: 12px;  
                     margin-top: 10px;
                     line-height: 12px;
                     letter-spacing: 0.004em;
                     color: $mes-error-color;
                 }
-                .reg__form-firstname-title{
+                .reg__form-firstname__title{
                     color: rgba(133, 134, 140, 1);
                     margin-bottom: 8px;
                 }
@@ -279,14 +279,14 @@ export default {
 
             .reg__form-lastname{
                 margin-bottom: 15px;
-                .reg__form-lastname-error{
+                .reg__form-lastname__error{
                     font-size: 12px;  
                     margin-top: 10px;
                     line-height: 12px;
                     letter-spacing: 0.004em;
                     color: $mes-error-color;
                 }
-                .reg__form-lastname-title{
+                .reg__form-lastname__title{
                     color: rgba(133, 134, 140, 1);
                     margin-bottom: 8px;
                 }
@@ -294,14 +294,14 @@ export default {
 
             .reg__form-tel{
                 margin-bottom: 15px;
-                .reg__form-tel-error{
+                .reg__form-tel__error{
                     font-size: 12px;  
                     margin-top: 10px;
                     line-height: 12px;
                     letter-spacing: 0.004em;
                     color: $mes-error-color;
                 }
-                .reg__form-tel-title{
+                .reg__form-tel__title{
                     color: rgba(133, 134, 140, 1);
                     margin-bottom: 8px;
                 }
@@ -309,14 +309,14 @@ export default {
 
             .reg__form-role{
                 margin-bottom: 15px;
-                .reg__form-role-error{
+                .reg__form-role__error{
                     font-size: 12px;  
                     margin-top: 10px;
                     line-height: 12px;
                     letter-spacing: 0.004em;
                     color: $mes-error-color;
                 }
-                .reg__form-role-title{
+                .reg__form-role__title{
                     color: rgba(133, 134, 140, 1);
                     margin-bottom: 8px;
                 }
@@ -341,10 +341,10 @@ export default {
                 align-items: center;
                 margin-top: 8px;
                 display: flex;
-                .reg__form-agreement-checkbox[type="checkbox"]{
+                .reg__form-agreement__checkbox[type="checkbox"]{
                     display: none;
                 }
-                .reg__form-agreement-checkbox + .reg__form-agreement-label {
+                .reg__form-agreement__checkbox + .reg__form-agreement-label {
                     position: relative;
                     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
                     cursor: pointer;
@@ -366,17 +366,17 @@ export default {
                     border: 3px solid #6B7182;
                     vertical-align: middle;
                 }
-                .reg__form-agreement-checkbox:checked + .reg__form-agreement-label::after {
+                .reg__form-agreement__checkbox:checked + .reg__form-agreement-label::after {
                     content: "\f00c";
                     background: #344887;
                 }
-                .reg__form-agreement-checkbox:disabled + .reg__form-agreement-label::after {
+                .reg__form-agreement__checkbox:disabled + .reg__form-agreement-label::after {
                     background: #999999;
                 }
                 .reg__form-agreement-text{
                     color: $reg-form-agreement-text-color;
                 }
-                .reg__form-agreement-checkbox:hover + .reg__form-agreement-label .reg__form-agreement-background{
+                .reg__form-agreement__checkbox:hover .reg__form-agreement-label__background{
                     position: absolute;
                     border-radius: 80px;
                     transition: all .2s;
@@ -451,7 +451,7 @@ export default {
                     margin-right: 200px;
                     position: relative;
                 }
-                .img__books-background{
+                .img__books__background{
                     top: -235px;
                 }
             }
@@ -461,10 +461,10 @@ export default {
                 height: auto;
                 flex-wrap: wrap;
                 justify-content: center;
-                .img__books-background{
+                .img__books__background{
                     display: none;
                 }
-                .img__books-img{
+                .img__books__img{
                     width: 100%;
                     height: auto;
                     min-width: 45px;

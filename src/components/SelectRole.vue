@@ -4,9 +4,9 @@
             :class="{invalid: inv.$invalid && inv.$dirty }"
             v-model="role"
             class="reg__form-role-select__box-select">
-            <option class="reg__form-role-select__box-select-admin">Администратор</option>
-            <option class="reg__form-role-select__box-select-manager">Менеджер</option>
-            <option class="reg__form-role-select__box-select-guest">Гость</option>
+            <option class="reg__form-role-select__box-select__admin">Администратор</option>
+            <option class="reg__form-role-select__box-select__manager">Менеджер</option>
+            <option class="reg__form-role-select__box-select__guest">Гость</option>
         </select>
     </div>
 </template>

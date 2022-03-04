@@ -4,7 +4,7 @@
             :class="{invalid: inv.$invalid && inv.$dirty }"
             v-maska="'+7 ### ### ## ##'"
             v-model.trim="tel"
-            class="reg__form-tel-input"
+            class="reg__form-tel__input"
             type="tel"  
             placeholder="Text"
         >
@@ -39,7 +39,7 @@
     $tel-input-color-focus:#344887;
     $tel-input-border-color-invalid: #EF3E4A;
     $tel-input-background-invalid: rgba(243, 39, 53, 0.08);
-    .reg__form-tel-input{
+    .reg__form-tel__input{
         max-width: 316px;
         width: 100%;
         transition: .2s all;
@@ -54,16 +54,16 @@
         border: 1px solid $tel-input-border-color;
         line-height: 18px;
     } 
-    .reg__form-tel-input:focus{
+    .reg__form-tel__input:focus{
         border-color: $tel-input-color-focus;
     }
-    .page .reg__form-tel-input.invalid{
+    .page .reg__form-tel__input.invalid{
         background: $tel-input-background-invalid;
         border-color: $tel-input-border-color-invalid;
     }
 
     @media (max-width: 640px){
-        .reg__form-tel-input{
+        .reg__form-tel__input{
             max-width: auto;
         }
     }
