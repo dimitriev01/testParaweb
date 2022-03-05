@@ -6,7 +6,7 @@
             v-model.trim="tel"
             class="reg__form-tel__input"
             type="tel"  
-            placeholder="Text"
+            placeholder="Enter tel..."
         >
     </div>
 </template>

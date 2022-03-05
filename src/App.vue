@@ -4,11 +4,13 @@
              <div class="img__books__background"></div>
              <img class="img__books__img" src="img/hero-layer-books 1.png" alt="нет картинки книги">
          </div>
+          <!-- <vue-formulate />
+          <vue-form-generator/> -->
          <div v-if="completed" class="completed__text">
              Успешно
          </div>
-         <form v-else class="reg__form" @submit.prevent="sendForm()">
-             <div class="reg__form-email">
+         <form v-else class="reg__form" @submit.prevent="sendForm()"> 
+              <div class="reg__form-email">
                  <div class="reg__form-email__title">Электронная почта</div>
                  <input-email
                     :inv="v$.email"
@@ -17,7 +19,7 @@
                  <div 
                  v-if="v$.email.$invalid && v$.email.$dirty" 
                  class="reg__form-email__error">
-                    Error message
+                    Incorrect email
                  </div>
              </div>
              <div class="reg__form-firstname">
@@ -29,7 +31,7 @@
                 <div 
                  v-if="v$.firstName.$invalid && v$.firstName.$dirty" 
                  class="reg__form-firstname__error">
-                    Error message
+                    Incorrect firstname
                  </div>
              </div>
              <div class="reg__form-lastname">
@@ -41,7 +43,7 @@
                  <div 
                  v-if="v$.lastName.$invalid && v$.lastName.$dirty" 
                  class="reg__form-lastname__error">
-                    Error message
+                    Incorrect lastname
                  </div>
              </div>
              <div class="reg__form-tel">
@@ -53,7 +55,7 @@
                  <div 
                  v-if="v$.tel.$invalid && v$.tel.$dirty" 
                  class="reg__form-tel__error">
-                    Error message
+                    Incorrect tel
                  </div>
              </div>
              <div class="reg__form-role">
@@ -67,7 +69,7 @@
                  <div 
                  v-if="v$.role.$invalid && v$.role.$dirty" 
                  class="reg__form-role__error">
-                    Error message
+                    Incorrect role
                  </div>
              </div>
               <div class="reg__form-agreement">
@@ -80,25 +82,30 @@
                  <label class="reg__form-agreement-label" for="reg__form-agreement__checkbox">
                       <div class="reg__form-agreement-label__background"></div>
                  </label>
-                 <div class="reg__form-agreement-text">Даю согласие на обработку персональных данных</div>
+                 <div class="reg__form-agreement__text">Даю согласие на обработку персональных данных</div>
              </div>
             <div class="reg__form-btn__box">
                 <button
                     :disabled="!role || !firstName || !lastName || !email || !tel"
                     type="submit"
-                    class="reg__form-btn__box-btn">
+                    class="reg__form-btn__box__btn">
                     Зарегистрироваться
                 </button>
-            </div>
+            </div> 
          </form>
     </div>
 </template>
 
 <script>
 import axios from 'axios'
+
 import useVuelidate from '@vuelidate/core'
 import { required, email, minLength } from '@vuelidate/validators'
+
 import MockAdapter from 'axios-mock-adapter'
+
+import VueFormulate from './components/VueFormulate'
+import VueFormGenerator from './components/VueFormGenerator'
 import InputEmail from './components/InputEmail'
 import InputFirstName from "./components/InputFirstName"
 import InputLastName from "./components/InputLastName"
@@ -107,11 +114,13 @@ import SelectRole from "./components/SelectRole"
 
 export default {
     components:{
+        VueFormulate,
+        VueFormGenerator,
         InputEmail, 
         InputFirstName, 
         InputLastName,
         InputTel,
-        SelectRole
+        SelectRole,
     },
     mounted(){
         let mock = new MockAdapter(axios);
@@ -373,7 +382,7 @@ export default {
                 .reg__form-agreement__checkbox:disabled + .reg__form-agreement-label::after {
                     background: #999999;
                 }
-                .reg__form-agreement-text{
+                .reg__form-agreement__text{
                     color: $reg-form-agreement-text-color;
                 }
                 .reg__form-agreement__checkbox:hover .reg__form-agreement-label__background{
@@ -392,7 +401,7 @@ export default {
                 margin-top: 60px;
                 justify-content: center;
                 display: flex;
-                .reg__form-btn__box-btn{
+                .reg__form-btn__box__btn{
                     outline: none;
                     transition: .4s all;
                     padding: 8px 16px;
@@ -405,15 +414,15 @@ export default {
                     font-weight: 500;
                     letter-spacing: 0.0125em;
                     border: 0;
-                    .reg__form-btn__box-btn:hover{
+                    .reg__form-btn__box__btn:hover{
                         cursor: pointer;
                         background: linear-gradient(0deg, rgba(196, 209, 255, 0.1), rgba(196, 209, 255, 0.1)), #344887;
                     }
                 }
-                .reg__form-btn__box-btn:active{
+                .reg__form-btn__box__btn:active{
                     background: linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), #344887;
                 }
-                .reg__form-btn__box-btn:disabled{
+                .reg__form-btn__box__btn:disabled{
                     color:#999;
                     cursor: default;
                     background: rgba(119, 119, 119, 0.1);

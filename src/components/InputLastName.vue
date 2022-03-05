@@ -5,7 +5,7 @@
             v-model.trim="lastName"
             class="reg__form-lastname__input"
             type="text"  
-            placeholder="Text"
+            placeholder="Enter lastname..."
         >
     </div>
 </template>

@@ -5,7 +5,7 @@
             v-model.trim="email"
             class="reg__form-email__input"
             type="text"
-            placeholder="Text"
+            placeholder="Enter email..."
         >
     </div>
 </template>
